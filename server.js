@@ -18,7 +18,7 @@ getIP(function(err, ip) {
 	}
 })
 
-app.get('/', function(req, res) {
+app.get('/api/whoami', function(req, res) {
 
 	var responseJSON = {
 		'ip': setIp,
