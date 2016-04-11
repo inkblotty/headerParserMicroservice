@@ -3,25 +3,37 @@ var app = express();
 
 var http = require('http').Server(app);
 var path = require('path');
-var getIP = require('external-ip')();
+//var requestIp= require('request-ip');
 var port = process.env.PORT || 8080;
 
-// we need the request's ip, lang, and software
+// ip is wrong ip at herokuapp link, but fine at localhost
 
-var setIp = '';
-	
+/*
+var clientIp = '';
+
+var setIp = function(req, res) {
+	clientIp = requestIp.getClientIp(req);
+	console.log(clientIp);
+};
+*/
+
+/*	
 getIP(function(err, ip) {
 	if (err) {
 		throw err
 	} else {
 		setIp = ip;
 	}
-})
+})*/
 
 app.get('/api/whoami', function(req, res) {
 
+	// clientIp will be ::1 on localhost, as it's a loopback
+
+	var clientIp = request.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
 	var responseJSON = {
-		'ip': setIp,
+		'ipaddress': clientIp,
 		'language': req.headers['accept-language'].split(',')[0].toString(),
 		'software': req.headers['user-agent'].match(/\(([a-z0-9\s\.;]+)\)/i)[1]
 	}
