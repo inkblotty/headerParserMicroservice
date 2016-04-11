@@ -30,7 +30,7 @@ app.get('/api/whoami', function(req, res) {
 
 	// clientIp will be ::1 on localhost, as it's a loopback
 
-	var clientIp = request.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	var clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
 	var responseJSON = {
 		'ipaddress': clientIp,
